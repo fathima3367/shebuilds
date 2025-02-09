@@ -75,20 +75,20 @@ For Software:
 
 
 # Build Photos
-![Team](Add photo of your team here)
+![Team](https://drive.google.com/file/d/1tQdz6om_Kb4THx9SV3LUJv7nL4zxPJyY/view?usp=drivesdk)
 
 
 
 ### Project Demo
 # Video
-[Add your demo video link here]
+[https://drive.google.com/file/d/1CjCjMK_-MLYnbq1SRUGgDB0ZNbkjpLW5/view?usp=sharing]
 *Explain what the video demonstrates*
 
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [Fathima M J]: [HTML]
+- [Fariza Noushad]: [CSS]
+- [Shifana E M]: [JavaScript]
 
 ---
 Made with ❤️ at TinkerHub
