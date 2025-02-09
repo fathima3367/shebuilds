@@ -60,13 +60,13 @@ Double-click on the index.html file to open it in your browser.]
 For Software:
 
 # Screenshots (Add at least 3)
-![![Screenshot 2025-02-09 100931.png](Add screenshot 1 here with proper name)
+![Screenshot 2025-02-09 100931.png](https://github.com/fathima3367/shebuilds/blob/main/image/Screenshot%202025-02-09%20100931.png)
 *Add caption explaining what this shows*
 
-![Screenshot 2025-02-09 102213.png](Add screenshot 2 here with proper name)
+![Screenshot 2025-02-09 102213.png](https://github.com/fathima3367/shebuilds/blob/main/image/Screenshot%202025-02-09%20102213.png)
 *Add caption explaining what this shows*
 
-![Screenshot3](Add screenshot 3 here with proper name)
+![Screenshot3](https://github.com/fathima3367/shebuilds/blob/main/image/Screenshot%202025-02-09%20102242.png)
 *Add caption explaining what this shows*
 
 # Diagrams
