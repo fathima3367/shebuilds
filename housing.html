@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Rental Housing Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+    background-image: url('C:/Users/MY PC/Downloads/house7.jpeg');
+}
+
+/* For smaller screens (mobile) */
+@media (max-width: 45px) {
+    body {
+        background-image: url('C:/Users/MY PC/Downloads/house7.jpeg'); o-repeat;
+    }
+}
+        .navbar {
+            background-color: #6F4F28;
+            color: rgb(254, 224, 224);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-container {
+            display: flex;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: rgb(255, 238, 216);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .content {
+            flex: 3;
+        }
+
+        .search-container {
+            background-color: rgb(255, 238, 216);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .property-card {
+            background-color: rgba(255, 255, 255, 0.964);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .property-details {
+            padding: 1rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #f7f2f2;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #af6d1c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ddb45c;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Kerala Rental Housing Portal</h1>
+        <button onclick="document.getElementById('loginModal').style.display='block'">Login</button>
+    </nav>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <h2>About Us</h2>
+            <p style="font-style: italic; margin: 1rem 0;">
+                Welcome to Kerala's premier affordable housing portal! We specialize in finding budget-friendly 
+                accommodations for students and professionals new to Kerala. All our listings are under ₹8,000 
+                per month, making them perfect for those starting their journey in a new city.
+            </p>
+            <h3>Why Choose Us?</h3>
+            <ul style="font-style: italic; margin: 1rem 0;">
+                <li>Verified Properties</li>
+                <li>Student-Friendly Options</li>
+                <li>Affordable Rates</li>
+                <li>All Kerala Coverage</li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <div class="search-container">
+                <h2>Find Your Perfect Home</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <select id="location">
+                        <option value="">Select Location</option>
+                        <option value="trivandrum">Trivandrum</option>
+                        <option value="kochi">Kochi</option>
+                        <option value="kozhikode">Kozhikode</option>
+                        <option value="thrissur">Thrissur</option>
+                    </select>
+                    <select id="type">
+                        <option value="">Property Type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="hostel">Hostel</option>
+                    </select>
+                    <input type="number" placeholder="Max Budget (₹)" max="8000">
+                    <button onclick="searchProperties()">Search</button>
+                </div>
+            </div>
+
+            <div class="property-grid" id="propertyGrid">
+                <!-- Property cards will be inserted here by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Register here</h2>
+            <form id="registrationForm" style="margin-top: 1rem;">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <input type="text" placeholder="Occupation" required>
+                <button type="submit" style="margin-top: 1rem;">Submit</button>
+                <button type="button" onclick="document.getElementById('loginModal').style.display='none'" style="margin-top: 1rem; background-color: #666;">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample property data (in real implementation, this would come from a backend)
+        const properties = [
+    {
+        id: 1,
+        location: 'kochi',
+        type: 'apartment',
+        title: '1BHK Near InfoPark',
+        address: 'Kakkanad, Kochi',
+        rent: 7500,
+        image: '/api/placeholder/300/200',
+        amenities: ['Furnished', 'Water Supply', 'Security']
+    },
+    {
+        id: 2,
+        location: 'trivandrum',
+        type: 'house',
+        title: '2BHK House Near Technopark',
+        address: 'Kazhakootam, Trivandrum',
+        rent: 7000,
+        image: '/api/placeholder/300/200',
+        amenities: ['Semi-Furnished', 'Car Parking', '24/7 Water']
+    },
+    {
+        id: 3,
+        location: 'kozhikode',
+        type: 'hostel',
+        title: 'Student Hostel Near NIT',
+        address: 'NIT Campus, Kozhikode',
+        rent: 5000,
+        image: '/api/placeholder/300/200',
+        amenities: ['Food Included', 'WiFi', 'Study Room']
+    },
+    
+    {
+        id: 4,
+        location: 'ernakulam',
+        type: 'house',
+        title: '3BHK House Near Vytilla Mobility Hub',
+        address: 'Vytilla, Ernakulam',
+        rent: 8000,
+        image: '/api/placeholder/300/200',
+        amenities: ['Fully Furnished', 'Car Parking', 'Security']
+    },
+    {
+        id: 5,
+        location: 'ernakulam',
+        type: 'house',
+        title: '2BHK House Near Edappally Metro Station',
+        address: 'Edappally, Ernakulam',
+        rent: 7500,
+        image: '/api/placeholder/300/200',
+        amenities: ['Semi-Furnished', 'Car Parking', '24/7 Water']
+    },
+    {
+        id: 6,
+        location: 'ernakulam',
+        type: 'apartment',
+        title: '1BHK Apartment in Aluva',
+        address: 'Aluva, Ernakulam',
+        rent: 6800,
+        image: '/api/placeholder/300/200',
+        amenities: ['Furnished', 'Water Supply', 'Lift']
+    },
+    {
+        id: 7,
+        location: 'ernakulam',
+        type: 'hostel',
+        title: 'Professional Hostel Near Palarivattom',
+        address: 'Palarivattom, Ernakulam',
+        rent: 5500,
+        image: '/api/placeholder/300/200',
+        amenities: ['Food Included', 'WiFi', 'Security']
+    }
+];
+
+
+        function createPropertyCard(property) {
+            return `
+                <div class="property-card">
+                    <img src="${property.image}" alt="${property.title}" class="property-image">
+                    <div class="property-details">
+                        <h3>${property.title}</h3>
+                        <p>${property.address}</p>
+                        <p><strong>₹${property.rent}</strong> per month</p>
+                        <p>${property.amenities.join(' • ')}</p>
+                        <button onclick="showRegistration(${property.id})" style="margin-top: 1rem;">Register here</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function searchProperties() {
+            const location = document.getElementById('location').value;
+            const type = document.getElementById('type').value;
+            
+            let filteredProperties = properties;
+            if (location) {
+                filteredProperties = filteredProperties.filter(p => p.location === location);
+            }
+            if (type) {
+                filteredProperties = filteredProperties.filter(p => p.type === type);
+            }
+
+            const propertyGrid = document.getElementById('propertyGrid');
+            propertyGrid.innerHTML = filteredProperties.map(createPropertyCard).join('');
+        }
+
+        function showRegistration(propertyId) {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        // Initial load of properties
+        searchProperties();
+
+        // Form submission handler
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Registration submitted successfully! We will contact you soon.');
+            document.getElementById('loginModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
+
